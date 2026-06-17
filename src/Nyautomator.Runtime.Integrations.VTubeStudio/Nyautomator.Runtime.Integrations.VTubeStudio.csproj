@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Nyautomator.Runtime.Integrations.VTubeStudio</AssemblyName>
+    <RootNamespace>Nyautomator.Runtime.Integrations.VTubeStudio</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="11.0.0-preview.3.26207.106" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseNyautomatorProjectReferences)' == 'true'">
+    <ProjectReference Include="$(NyautomatorSourceRoot)src\Nyautomator.Core\Nyautomator.Core.csproj" />
+    <ProjectReference Include="$(NyautomatorSourceRoot)src\Nyautomator.Runtime.Abstractions\Nyautomator.Runtime.Abstractions.csproj" />
+    <ProjectReference Include="..\Nyautomator.VTubeStudio\Nyautomator.VTubeStudio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseNyautomatorProjectReferences)' != 'true'">
+    <Reference Include="Nyautomator.Core">
+      <HintPath>$(NyautomatorReferencePath)Nyautomator.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Nyautomator.Runtime.Abstractions">
+      <HintPath>$(NyautomatorReferencePath)Nyautomator.Runtime.Abstractions.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <ProjectReference Include="..\Nyautomator.VTubeStudio\Nyautomator.VTubeStudio.csproj" />
+  </ItemGroup>
+
+</Project>

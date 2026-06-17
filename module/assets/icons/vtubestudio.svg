@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="VTube Studio">
+  <rect width="64" height="64" rx="12" fill="#1f2937"/>
+  <path d="M16 18h32v20a16 16 0 0 1-32 0V18Z" fill="#38bdf8"/>
+  <path d="M24 27h4v5h-4v-5Zm12 0h4v5h-4v-5Z" fill="#0f172a"/>
+  <path d="M25 40c4 4 10 4 14 0" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M18 18 12 9m34 9 6-9" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/>
+</svg>

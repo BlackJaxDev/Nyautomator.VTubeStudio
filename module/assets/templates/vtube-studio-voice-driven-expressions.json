@@ -1,0 +1,74 @@
+{
+  "$schema": "nyautomator.template.v1",
+  "id": "vtube-studio-voice-driven-expressions",
+  "kind": "automation-workflow",
+  "title": "Voice-driven expressions",
+  "group": "VTube Studio",
+  "summary": "Audio.Speech.Recognized keyword -> switch VTube expression -> cooldown.",
+  "description": "Voice-driven expressions: Audio.Speech.Recognized keyword -> switch VTube expression -> cooldown.",
+  "rootOnly": true,
+  "generatedFrom": "docs/template-ideas.md",
+  "triggers": [
+    {
+      "id": "trigger-1",
+      "actionType": "Audio.Speech.Recognized",
+      "actionConfig": {
+        "ContainsText": "",
+        "MinConfidence": 0.35
+      },
+      "actionName": "Speech Recognized"
+    }
+  ],
+  "messageTemplate": "Speech recognized: {{Text}}",
+  "constants": [
+    {
+      "key": "vtubeHotkeyId",
+      "name": "VTube Studio Hotkey ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "vtubeExpressionFile",
+      "name": "VTube Studio Expression File",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "variableName",
+      "name": "Global Variable Name",
+      "value": "voice_driven_expressions",
+      "type": "string"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "vtube-hotkey",
+      "nodeKind": "reaction",
+      "type": "Action.VTubeStudio.TriggerHotkey",
+      "name": "Trigger VTube Studio Hotkey",
+      "config": {
+        "HotkeyId": "",
+        "ItemInstanceId": ""
+      },
+      "bindings": {
+        "vtubeHotkeyId": "HotkeyId"
+      }
+    },
+    {
+      "kind": "vtube-expression",
+      "nodeKind": "reaction",
+      "type": "Action.VTubeStudio.SetExpression",
+      "name": "Set VTube Studio Expression",
+      "config": {
+        "ExpressionFile": "",
+        "Active": true,
+        "FadeTimeSeconds": 0.25
+      },
+      "bindings": {
+        "vtubeExpressionFile": "ExpressionFile"
+      }
+    },
+    "set-global-variable",
+    "log"
+  ]
+}

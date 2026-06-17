@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Nyautomator.Modules.VTubeStudio</RootNamespace>
+    <AssemblyName>Nyautomator.Module.VTubeStudio</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="11.0.0-preview.3.26207.106" />
+    <PackageReference Include="System.Text.Json" Version="10.0.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseNyautomatorProjectReferences)' == 'true'">
+    <ProjectReference Include="$(NyautomatorSourceRoot)src\Nyautomator.Core\Nyautomator.Core.csproj" />
+    <ProjectReference Include="$(NyautomatorSourceRoot)src\Nyautomator.Module.Abstractions\Nyautomator.Module.Abstractions.csproj" />
+    <ProjectReference Include="$(NyautomatorSourceRoot)src\Nyautomator.Runtime.Abstractions\Nyautomator.Runtime.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseNyautomatorProjectReferences)' != 'true'">
+    <Reference Include="Nyautomator.Core">
+      <HintPath>$(NyautomatorReferencePath)Nyautomator.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Nyautomator.Module.Abstractions">
+      <HintPath>$(NyautomatorReferencePath)Nyautomator.Module.Abstractions.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Nyautomator.Runtime.Abstractions">
+      <HintPath>$(NyautomatorReferencePath)Nyautomator.Runtime.Abstractions.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nyautomator.Automation.VTubeStudio\Nyautomator.Automation.VTubeStudio.csproj" />
+    <ProjectReference Include="..\Nyautomator.Runtime.Integrations.VTubeStudio\Nyautomator.Runtime.Integrations.VTubeStudio.csproj" />
+    <ProjectReference Include="..\Nyautomator.VTubeStudio\Nyautomator.VTubeStudio.csproj" />
+  </ItemGroup>
+
+</Project>

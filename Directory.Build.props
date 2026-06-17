@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)build/$(MSBuildProjectName)/</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)intermediate/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)/bin/**;$(MSBuildProjectDirectory)/obj/**</DefaultItemExcludes>
+    <UseNyautomatorProjectReferences Condition="'$(UseNyautomatorProjectReferences)' == ''">true</UseNyautomatorProjectReferences>
+    <NyautomatorSourceRoot Condition="'$(NyautomatorSourceRoot)' == ''">$(MSBuildThisFileDirectory)..\..\</NyautomatorSourceRoot>
+    <NyautomatorReferencePath Condition="'$(NyautomatorReferencePath)' == ''">$(MSBuildThisFileDirectory)lib/nyautomator/</NyautomatorReferencePath>
+  </PropertyGroup>
+</Project>

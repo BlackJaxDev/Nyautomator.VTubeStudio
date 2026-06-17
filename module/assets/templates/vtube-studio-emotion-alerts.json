@@ -1,0 +1,89 @@
+{
+  "$schema": "nyautomator.template.v1",
+  "id": "vtube-studio-emotion-alerts",
+  "kind": "automation-workflow",
+  "title": "Emotion alerts",
+  "group": "VTube Studio",
+  "summary": "sub/raid event -> trigger VTube Studio hotkey (celebrate) -> set expression -> delay -> clear expression.",
+  "description": "Emotion alerts: sub/raid event -> trigger VTube Studio hotkey (celebrate) -> set expression -> delay -> clear expression.",
+  "rootOnly": true,
+  "generatedFrom": "docs/template-ideas.md",
+  "triggers": [
+    {
+      "id": "trigger-1",
+      "actionType": "Twitch.EventSub.channel.raid.1",
+      "actionConfig": {},
+      "actionName": "Twitch Raid"
+    }
+  ],
+  "messageTemplate": "{{FromBroadcasterUserName}} raided with {{Viewers}} viewers.",
+  "constants": [
+    {
+      "key": "mediaPath",
+      "name": "Alert Media Path",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "audioPath",
+      "name": "Alert Audio Path",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "durationSeconds",
+      "name": "Alert Duration Seconds",
+      "value": 6,
+      "type": "float64"
+    },
+    {
+      "key": "playTextToSpeech",
+      "name": "Play Text To Speech",
+      "value": false,
+      "type": "boolean"
+    },
+    {
+      "key": "vtubeHotkeyId",
+      "name": "VTube Studio Hotkey ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "vtubeExpressionFile",
+      "name": "VTube Studio Expression File",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "steps": [
+    "alert",
+    {
+      "kind": "vtube-hotkey",
+      "nodeKind": "reaction",
+      "type": "Action.VTubeStudio.TriggerHotkey",
+      "name": "Trigger VTube Studio Hotkey",
+      "config": {
+        "HotkeyId": "",
+        "ItemInstanceId": ""
+      },
+      "bindings": {
+        "vtubeHotkeyId": "HotkeyId"
+      }
+    },
+    {
+      "kind": "vtube-expression",
+      "nodeKind": "reaction",
+      "type": "Action.VTubeStudio.SetExpression",
+      "name": "Set VTube Studio Expression",
+      "config": {
+        "ExpressionFile": "",
+        "Active": true,
+        "FadeTimeSeconds": 0.25
+      },
+      "bindings": {
+        "vtubeExpressionFile": "ExpressionFile"
+      }
+    },
+    "log"
+  ]
+}

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Nyautomator.Automation.VTubeStudio/Nyautomator.Automation.VTubeStudio.csproj" />
+    <Project Path="src/Nyautomator.Module.VTubeStudio/Nyautomator.Module.VTubeStudio.csproj" />
+    <Project Path="src/Nyautomator.Runtime.Integrations.VTubeStudio/Nyautomator.Runtime.Integrations.VTubeStudio.csproj" />
+    <Project Path="src/Nyautomator.VTubeStudio/Nyautomator.VTubeStudio.csproj" />
+  </Folder>
+</Solution>

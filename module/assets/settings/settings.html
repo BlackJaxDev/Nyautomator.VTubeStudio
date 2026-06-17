@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VTube Studio Settings</title>
+  <style>
+    :root { color-scheme: dark light; font-family: Inter, Segoe UI, sans-serif; }
+    body { margin: 0; background: transparent; color: inherit; }
+    form { display: grid; gap: 10px; padding: 12px; }
+    label { display: grid; gap: 4px; font-size: 12px; opacity: .88; }
+    input { border: 1px solid color-mix(in srgb, currentColor 24%, transparent); border-radius: 6px; background: color-mix(in srgb, currentColor 8%, transparent); color: inherit; padding: 7px 9px; font: inherit; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .actions { display: flex; gap: 8px; }
+    button { border: 1px solid #0891b2; border-radius: 6px; background: #0891b2; color: white; padding: 7px 10px; font: inherit; cursor: pointer; }
+    .message { min-height: 18px; font-size: 12px; opacity: .78; }
+  </style>
+</head>
+<body>
+  <form id="form">
+    <label>Server URL<input name="serverUrl" placeholder="ws://localhost:8001"></label>
+    <label>Plugin Name<input name="pluginName" placeholder="Nyautomator"></label>
+    <label>Plugin Developer<input name="pluginDeveloper" placeholder="BlackJaxDev"></label>
+    <label class="row"><input name="enabled" type="checkbox"> Enable startup behavior</label>
+    <label class="row"><input name="autoReconnect" type="checkbox"> Auto reconnect</label>
+    <div class="actions"><button type="submit">Save</button></div>
+    <div id="message" class="message"></div>
+  </form>
+  <script>
+    const moduleId = 'vtubestudio';
+    const assetPath = 'settings/settings.html';
+    const form = document.getElementById('form');
+    const message = document.getElementById('message');
+
+    function reportFrameHeight() {
+      const contentHeight = form.getBoundingClientRect().height || document.body.scrollHeight;
+      window.parent?.postMessage({
+        type: 'nyautomator:module-frame-height',
+        moduleId,
+        assetPath,
+        height: contentHeight + 8
+      }, window.location.origin);
+    }
+
+    async function load() {
+      const response = await fetch('/modules/vtubestudio/config');
+      const config = await response.json().catch(() => ({}));
+      form.serverUrl.value = config.serverUrl || 'ws://localhost:8001';
+      form.pluginName.value = config.pluginName || 'Nyautomator';
+      form.pluginDeveloper.value = config.pluginDeveloper || 'BlackJaxDev';
+      form.enabled.checked = !!config.enabled;
+      form.autoReconnect.checked = config.autoReconnect !== false;
+      reportFrameHeight();
+    }
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const body = {
+        serverUrl: form.serverUrl.value,
+        pluginName: form.pluginName.value,
+        pluginDeveloper: form.pluginDeveloper.value,
+        enabled: form.enabled.checked,
+        autoReconnect: form.autoReconnect.checked
+      };
+      const response = await fetch('/modules/vtubestudio/config', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+      message.textContent = response.ok ? 'Saved.' : 'Save failed.';
+      reportFrameHeight();
+    });
+    load().catch(err => { message.textContent = err.message; reportFrameHeight(); });
+    window.addEventListener('load', reportFrameHeight);
+    if ('ResizeObserver' in window)
+      new ResizeObserver(reportFrameHeight).observe(form);
+  </script>
+</body>
+</html>

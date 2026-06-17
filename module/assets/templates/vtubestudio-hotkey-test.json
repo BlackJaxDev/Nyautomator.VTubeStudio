@@ -1,0 +1,6 @@
+{
+  "name": "Trigger VTube Studio Hotkey",
+  "description": "Dashboard button triggers a configured VTube Studio hotkey.",
+  "requiredModuleIds": [ "vtubestudio" ],
+  "nodes": []
+}

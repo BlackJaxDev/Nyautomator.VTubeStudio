@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "id": "vtubestudio",
+  "displayName": "VTube Studio",
+  "description": "VTube Studio Public API auth, model, hotkey, expression, parameter, event, and automation support.",
+  "version": "0.1.0",
+  "minHostVersion": "0.0.0",
+  "entryAssembly": "Nyautomator.Module.VTubeStudio.dll",
+  "entryType": "Nyautomator.Modules.VTubeStudio.VtubeStudioModule",
+  "capabilities": [
+    "runtime.integration",
+    "automation.nodes",
+    "authenticated.request",
+    "dashboard.cards",
+    "settings.cards",
+    "graph.templates",
+    "icons"
+  ],
+  "assetsRoot": "assets",
+  "contributions": {
+    "icons": [
+      {
+        "id": "vtubestudio",
+        "path": "icons/vtubestudio.svg"
+      }
+    ],
+    "dashboardCards": [
+      {
+        "id": "status",
+        "title": "VTube Studio",
+        "icon": "vtubestudio",
+        "renderer": "asset-frame",
+        "statusSource": "/modules/vtubestudio/api/status",
+        "assetPath": "dashboard/dashboard.html",
+        "metadata": {
+          "requiresAuth": true,
+          "authStatusFields": [ "isAuthenticated", "authenticated" ]
+        },
+        "order": 560
+      }
+    ],
+    "settingsCards": [
+      {
+        "id": "settings",
+        "title": "VTube Studio",
+        "icon": "vtubestudio",
+        "renderer": "asset-frame",
+        "statusSource": "/modules/vtubestudio/api/status",
+        "assetPath": "settings/settings.html",
+        "metadata": {
+          "saveOnHostSave": true
+        },
+        "order": 560
+      }
+    ],
+    "graphTemplates": [
+      {
+        "id": "vtubestudio-hotkey-test",
+        "label": "Trigger VTube Studio Hotkey",
+        "description": "Dashboard button triggers a configured VTube Studio hotkey.",
+        "category": "VTube Studio",
+        "path": "templates/vtubestudio-hotkey-test.json",
+        "requiredModuleIds": [ "vtubestudio" ],
+        "order": 560
+      },
+      {
+        "id": "vtube-studio-emotion-alerts",
+        "label": "Emotion alerts",
+        "description": "Sub/raid event triggers a VTube Studio hotkey and expression workflow.",
+        "category": "VTube Studio",
+        "path": "templates/vtube-studio-emotion-alerts.json",
+        "requiredModuleIds": [ "vtubestudio" ],
+        "order": 561
+      },
+      {
+        "id": "vtube-studio-parameter-reactive-prop",
+        "label": "Parameter reactive prop",
+        "description": "Drive a VTube Studio parameter from an automation event.",
+        "category": "VTube Studio",
+        "path": "templates/vtube-studio-parameter-reactive-prop.json",
+        "requiredModuleIds": [ "vtubestudio" ],
+        "order": 562
+      },
+      {
+        "id": "vtube-studio-reward-expression",
+        "label": "Reward expression",
+        "description": "Channel point reward sets a VTube Studio expression and logs the event.",
+        "category": "VTube Studio",
+        "path": "templates/vtube-studio-reward-expression.json",
+        "requiredModuleIds": [ "vtubestudio" ],
+        "order": 563
+      },
+      {
+        "id": "vtube-studio-scene-synced-model-state",
+        "label": "Scene-synced model state",
+        "description": "OBS scene changes trigger matching VTube Studio hotkeys.",
+        "category": "VTube Studio",
+        "path": "templates/vtube-studio-scene-synced-model-state.json",
+        "requiredModuleIds": [ "vtubestudio" ],
+        "order": 564
+      },
+      {
+        "id": "vtube-studio-voice-driven-expressions",
+        "label": "Voice-driven expressions",
+        "description": "Audio or voice activity controls VTube Studio expression changes.",
+        "category": "VTube Studio",
+        "path": "templates/vtube-studio-voice-driven-expressions.json",
+        "requiredModuleIds": [ "vtubestudio" ],
+        "order": 565
+      }
+    ],
+    "authenticatedIntegrations": [
+      {
+        "id": "vtubestudio",
+        "displayName": "VTube Studio",
+        "basePath": "/modules/vtubestudio/api"
+      }
+    ],
+    "automationAssemblies": [
+      {
+        "id": "nodes",
+        "path": "Nyautomator.Automation.VTubeStudio.dll"
+      }
+    ],
+    "runtimeParticipants": [
+      {
+        "id": "runtime",
+        "typeName": "Nyautomator.Modules.VTubeStudio.VtubeStudioRuntimeParticipant, Nyautomator.Module.VTubeStudio"
+      }
+    ]
+  }
+}

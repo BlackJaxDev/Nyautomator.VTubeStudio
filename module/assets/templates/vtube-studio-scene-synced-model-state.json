@@ -1,0 +1,51 @@
+{
+  "$schema": "nyautomator.template.v1",
+  "id": "vtube-studio-scene-synced-model-state",
+  "kind": "automation-workflow",
+  "title": "Scene-synced model state",
+  "group": "VTube Studio",
+  "summary": "OBS scene change -> trigger matching VTube hotkey (e.g. props for gaming scene).",
+  "description": "Scene-synced model state: OBS scene change -> trigger matching VTube hotkey (e.g. props for gaming scene).",
+  "rootOnly": true,
+  "generatedFrom": "docs/template-ideas.md",
+  "triggers": [
+    {
+      "id": "trigger-1",
+      "actionType": "OBS.Event.CurrentProgramSceneChanged",
+      "actionConfig": {},
+      "actionName": "OBS Scene Changed"
+    }
+  ],
+  "messageTemplate": "OBS event fired for {{SceneName}}{{InputName}}{{EventType}}.",
+  "constants": [
+    {
+      "key": "sceneName",
+      "name": "OBS Scene Name",
+      "value": "Live",
+      "type": "string"
+    },
+    {
+      "key": "vtubeHotkeyId",
+      "name": "VTube Studio Hotkey ID",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "steps": [
+    "obs-scene",
+    {
+      "kind": "vtube-hotkey",
+      "nodeKind": "reaction",
+      "type": "Action.VTubeStudio.TriggerHotkey",
+      "name": "Trigger VTube Studio Hotkey",
+      "config": {
+        "HotkeyId": "",
+        "ItemInstanceId": ""
+      },
+      "bindings": {
+        "vtubeHotkeyId": "HotkeyId"
+      }
+    },
+    "log"
+  ]
+}

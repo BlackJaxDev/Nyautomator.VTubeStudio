@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VTube Studio</title>
+  <style>
+    :root { color-scheme: dark light; font-family: Inter, Segoe UI, sans-serif; }
+    body { margin: 0; background: transparent; color: inherit; }
+    .panel { display: grid; gap: 10px; padding: 12px; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .status { font-weight: 700; }
+    .muted { opacity: .72; font-size: 12px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    button, input { border: 1px solid color-mix(in srgb, currentColor 24%, transparent); border-radius: 6px; background: color-mix(in srgb, currentColor 8%, transparent); color: inherit; padding: 7px 9px; font: inherit; }
+    button { cursor: pointer; }
+    button.primary { background: #0891b2; color: white; border-color: #0891b2; }
+    button.danger { background: #be123c; color: white; border-color: #be123c; }
+    input { min-width: 0; flex: 1 1 140px; }
+    .error { color: #fb7185; }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <div class="row"><span>Connection</span><span id="state" class="status">Loading</span></div>
+    <div id="details" class="muted"></div>
+    <div id="error" class="error"></div>
+    <div class="actions">
+      <button class="primary" data-action="connect">Connect</button>
+      <button data-action="request">Request Access</button>
+      <button data-action="auth">Authenticate</button>
+      <button class="danger" data-action="disconnect">Disconnect</button>
+      <button data-action="clear">Forget Token</button>
+    </div>
+    <div class="actions">
+      <input id="hotkey" placeholder="Hotkey ID">
+      <button class="primary" data-action="hotkey">Trigger</button>
+    </div>
+  </div>
+  <script>
+    const api = '/modules/vtubestudio/api';
+    const state = document.getElementById('state');
+    const details = document.getElementById('details');
+    const error = document.getElementById('error');
+    const hotkey = document.getElementById('hotkey');
+
+    async function request(path, init) {
+      const response = await fetch(api + path, init);
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || response.statusText);
+      render(payload.status ? payload : { status: payload.status });
+      return payload;
+    }
+
+    function render(payload) {
+      const status = payload?.status || {};
+      state.textContent = status.isAuthenticated ? 'Authenticated' : status.isConnected ? 'Connected' : status.hasStoredToken ? 'Token Stored' : (status.state || 'Disconnected');
+      details.textContent = [status.endpoint, status.vtsVersion, status.updatedAtUtc].filter(Boolean).join(' | ');
+      error.textContent = status.lastError || '';
+    }
+
+    async function refresh() {
+      try { render(await (await fetch(api + '/status')).json()); }
+      catch (err) { state.textContent = 'Unavailable'; error.textContent = err.message; }
+    }
+
+    document.addEventListener('click', event => {
+      const action = event.target?.dataset?.action;
+      if (!action) return;
+      const routes = {
+        connect: ['/connect', { method: 'POST' }],
+        request: ['/auth/token/request', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' }],
+        auth: ['/auth/session', { method: 'POST' }],
+        disconnect: ['/disconnect', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ clearStoredToken: false }) }],
+        clear: ['/auth/clear', { method: 'POST' }],
+        hotkey: ['/hotkey/trigger', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ hotkeyId: hotkey.value }) }]
+      };
+      const route = routes[action];
+      if (route) request(route[0], route[1]).catch(err => { error.textContent = err.message; });
+    });
+
+    refresh();
+    setInterval(refresh, 10000);
+  </script>
+</body>
+</html>

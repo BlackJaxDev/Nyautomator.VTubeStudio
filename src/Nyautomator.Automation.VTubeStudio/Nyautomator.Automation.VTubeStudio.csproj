@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Nyautomator.Automation.VTubeStudio</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseNyautomatorProjectReferences)' == 'true'">
+    <ProjectReference Include="$(NyautomatorSourceRoot)src\Nyautomator.Automation\Nyautomator.Automation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseNyautomatorProjectReferences)' != 'true'">
+    <Reference Include="Nyautomator.Automation">
+      <HintPath>$(NyautomatorReferencePath)Nyautomator.Automation.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
