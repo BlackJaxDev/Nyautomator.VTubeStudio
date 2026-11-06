@@ -33,19 +33,7 @@
   ],
   "steps": [
     "obs-scene",
-    {
-      "kind": "vtube-hotkey",
-      "nodeKind": "reaction",
-      "type": "Action.VTubeStudio.TriggerHotkey",
-      "name": "Trigger VTube Studio Hotkey",
-      "config": {
-        "HotkeyId": "",
-        "ItemInstanceId": ""
-      },
-      "bindings": {
-        "vtubeHotkeyId": "HotkeyId"
-      }
-    },
+    "vtube-hotkey",
     "log"
   ]
 }

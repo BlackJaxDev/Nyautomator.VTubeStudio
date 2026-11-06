@@ -96,7 +96,7 @@
         "description": "OBS scene changes trigger matching VTube Studio hotkeys.",
         "category": "VTube Studio",
         "path": "templates/vtube-studio-scene-synced-model-state.json",
-        "requiredModuleIds": [ "vtubestudio" ],
+        "requiredModuleIds": [ "vtubestudio", "obs" ],
         "order": 564
       },
       {
@@ -107,6 +107,35 @@
         "path": "templates/vtube-studio-voice-driven-expressions.json",
         "requiredModuleIds": [ "vtubestudio" ],
         "order": 565
+      }
+    ],
+    "graphStepPresets": [
+      {
+        "id": "vtube-hotkey",
+        "type": "Action.VTubeStudio.TriggerHotkey",
+        "name": "Trigger VTube Studio Hotkey",
+        "config": {
+          "HotkeyId": "",
+          "ItemInstanceId": ""
+        },
+        "bindings": {
+          "vtubeHotkeyId": "HotkeyId"
+        },
+        "order": 560
+      },
+      {
+        "id": "vtube-expression",
+        "type": "Action.VTubeStudio.SetExpression",
+        "name": "Set VTube Studio Expression",
+        "config": {
+          "ExpressionFile": "",
+          "Active": true,
+          "FadeTimeSeconds": 0.25
+        },
+        "bindings": {
+          "vtubeExpressionFile": "ExpressionFile"
+        },
+        "order": 561
       }
     ],
     "authenticatedIntegrations": [

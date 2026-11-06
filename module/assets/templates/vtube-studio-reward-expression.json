@@ -59,33 +59,8 @@
   ],
   "steps": [
     "alert",
-    {
-      "kind": "vtube-hotkey",
-      "nodeKind": "reaction",
-      "type": "Action.VTubeStudio.TriggerHotkey",
-      "name": "Trigger VTube Studio Hotkey",
-      "config": {
-        "HotkeyId": "",
-        "ItemInstanceId": ""
-      },
-      "bindings": {
-        "vtubeHotkeyId": "HotkeyId"
-      }
-    },
-    {
-      "kind": "vtube-expression",
-      "nodeKind": "reaction",
-      "type": "Action.VTubeStudio.SetExpression",
-      "name": "Set VTube Studio Expression",
-      "config": {
-        "ExpressionFile": "",
-        "Active": true,
-        "FadeTimeSeconds": 0.25
-      },
-      "bindings": {
-        "vtubeExpressionFile": "ExpressionFile"
-      }
-    },
+    "vtube-hotkey",
+    "vtube-expression",
     "log"
   ]
 }
